@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{% if page.title %}{{ page.title }} | {% endif %}André Mekkawi</title>
+		<!--<link rel="shortcut icon" href="{{ page.basepath }}images/favicon.png" type="image/png">-->
+		
+		<link media="all" rel="stylesheet{%if site.LessExt == 'less' %}/less{%endif%}" type="text/css" href="{{ page.basepath }}css/base.{{site.LessExt}}">
+		<link media="screen" rel="stylesheet{%if site.LessExt == 'less' %}/less{%endif%}" type="text/css" href="{{ page.basepath }}css/screen.{{site.LessExt}}">
+		<link media="print" rel="stylesheet{%if site.LessExt == 'less' %}/less{%endif%}" type="text/css" href="{{ page.basepath }}css/print.{{site.LessExt}}">
+		
+		{% for file in page.css %}
+			{% capture firstchar %}{{ file | truncate: 1, '' }}{% endcapture %}
+			{% capture first7char %}{{ file | truncate: 7, '' }}{% endcapture %}
+			{% capture first8char %}{{ file | truncate: 8, '' }}{% endcapture %}
+			{% if firstchar == '.' or firstchar == '/' or first7char == 'http://' or first8char == 'https://' %}
+				<link href="{{ file }}" type="text/css" rel="stylesheet">
+			{% else %}
+				<link href="{{ page.basepath }}css/{{ file }}" type="text/css" rel="stylesheet">
+			{% endif %}
+		{% endfor %}
+		
+		{% if page.js %}
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		{% endif %}
+		
+		{% for file in page.js %}
+			{% capture firstchar %}{{ file | truncate: 1, '' }}{% endcapture %}
+			{% capture first7char %}{{ file | truncate: 7, '' }}{% endcapture %}
+			{% capture first8char %}{{ file | truncate: 8, '' }}{% endcapture %}
+			{% if firstchar == '.' or firstchar == '/' or first7char == 'http://' or first8char == 'https://' %}
+				<script src="{{ file }}"></script>
+			{% else %}
+				<script src="{{ page.basepath }}js/{{ file }}"></script>
+			{% endif %}
+		{% endfor %}
+		
+		{% if site.LessExt == 'less' %}
+		<script src="{{ page.basepath }}js/less.min.js"></script>
+		{% endif %}
+		
+		<!--[if lt IE 9]>
+			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		
+		<!--<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-21143641-1']);
+			
+			{% if page.activepage == 404 %}
+			_gaq.push(['_trackPageview', "/404.html?page=" + document.location.pathname + document.location.search + "&from=" + document.referrer]);
+			{% else %}
+			_gaq.push(['_trackPageview']);
+			{% endif %}
+			
+		
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+		
+		function RE(category, action, label) {
+			_gaq.push(['_trackEvent', category, action, label]);
+		}
+		
+		function ROL(anchor) {
+			try {
+				RE('Outbound', 'Link', anchor.href);
+				if (anchor.target == '_blank') {
+					return true;
+				}
+				else {
+					setTimeout(function(){
+						document.location = anchor.href;
+					}, 100);
+					return false;
+				}
+			} catch(err) { }
+		}
+		
+		function ROD(anchor, version) {
+			try {
+				RE('Outbound', 'Download', version);
+				if (anchor.target == '_blank') {
+					return true;
+				}
+				else {
+					setTimeout(function(){
+						document.location = anchor.href;
+					}, 100);
+					return false;
+				}
+			} catch(err) { }
+		}
+		</script>-->
+	</head>
+
+	<body>
+		<div class="container">
+			
+			{{ content }}
+
+		</div>
+
+	</body>
+</html>
