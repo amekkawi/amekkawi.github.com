@@ -4,11 +4,11 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>{% if page.title %}{{ page.title }} | {% endif %}André Mekkawi</title>
+        
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
 		<!--<link rel="shortcut icon" href="{{ page.basepath }}images/favicon.png" type="image/png">-->
 		
-		<link media="all" rel="stylesheet{%if site.LessExt == 'less' %}/less{%endif%}" type="text/css" href="{{ page.basepath }}css/base.{{site.LessExt}}">
-		<link media="screen" rel="stylesheet{%if site.LessExt == 'less' %}/less{%endif%}" type="text/css" href="{{ page.basepath }}css/screen.{{site.LessExt}}">
-		<link media="print" rel="stylesheet{%if site.LessExt == 'less' %}/less{%endif%}" type="text/css" href="{{ page.basepath }}css/print.{{site.LessExt}}">
+		<link media="all" rel="stylesheet" type="text/css" href="{{ page.basepath }}css/bootstrap-min.css">
 		
 		{% for file in page.css %}
 			{% capture firstchar %}{{ file | truncate: 1, '' }}{% endcapture %}
@@ -100,7 +100,23 @@
 	<body>
 		<div class="container">
 			
+            <div id="Header" class="row">
+            	<div id="Title" class="span4">
+            		<a href="#">André Mekkawi</a>
+                </div>
+                <div id="Navi" class="span5">
+                	<ul>
+                    	<li>About Me</li>
+                        <li>PHP</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content">
+            
 			{{ content }}
+            
+            </div>
 
 		</div>
 
