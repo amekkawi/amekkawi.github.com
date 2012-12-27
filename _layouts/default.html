@@ -9,6 +9,7 @@
 		<!--<link rel="shortcut icon" href="{{ page.basepath }}images/favicon.png" type="image/png">-->
 		
 		<link media="all" rel="stylesheet" type="text/css" href="{{ page.basepath }}css/bootstrap.min.css">
+        <link media="all" rel="stylesheet" type="text/css" href="{{ page.basepath }}css/screen.css">
 		
 		{% for file in page.css %}
 			{% capture firstchar %}{{ file | truncate: 1, '' }}{% endcapture %}
@@ -101,9 +102,9 @@
 		<div class="container">
 			
             <div id="Header" class="row">
-            	<div id="Title" class="span4">
+            	<h1 id="Title" class="span4">
             		<a href="#">André Mekkawi</a>
-                </div>
+                </h1>
                 <div id="Navi" class="span5">
                 	<ul>
                     	<li>About Me</li>
