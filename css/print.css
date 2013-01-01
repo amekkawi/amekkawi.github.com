@@ -1,0 +1,27 @@
+.noprint {
+	display: none;
+}
+
+.portfolio section {
+	padding: 8px 16px;
+	border-left-width: 5px;
+}
+
+#Title a {
+	font-size: 46px;
+	padding: 8px 8px;
+}
+
+#Content {
+	margin-top: 8px;
+	padding-top: 24px;
+}
+
+.portfolio .divider {
+	border-top-color: #000;
+}
+
+a[href].disable-print-href:after,
+.disable-print-href a[href]:after {
+	content: "";
+}

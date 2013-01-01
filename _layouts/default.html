@@ -9,7 +9,9 @@
 		<!--<link rel="shortcut icon" href="{{ page.basepath }}/images/favicon.png" type="image/png">-->
 		
 		<link media="all" rel="stylesheet" type="text/css" href="{{ page.basepath }}/bootstrap/css/bootstrap.css">
-        <link media="all" rel="stylesheet" type="text/css" href="{{ page.basepath }}/css/screen.css">
+        <link media="all" rel="stylesheet" type="text/css" href="{{ page.basepath }}/css/base.css">
+        <link media="screen" rel="stylesheet" type="text/css" href="{{ page.basepath }}/css/screen.css">
+        <link media="print" rel="stylesheet" type="text/css" href="{{ page.basepath }}/css/print.css">
 		
 		{% for file in page.css %}
 			{% capture firstchar %}{{ file | truncate: 1, '' }}{% endcapture %}
@@ -111,7 +113,7 @@
             	<h1 id="Title">
             		<a href="#/">André Mekkawi</a> <!--{{ page.basepath }}-->
                 </h1>
-                <!--<div id="Navi">
+                <!--<div id="Navi" class="noprint">
                 	<ul>
                     	<li class="{% if page.activepage == 'home' %}active{% endif %}"><a href="{{ page.basepath }}/">About Me</a></li>
                         <li><span>/</span></li>

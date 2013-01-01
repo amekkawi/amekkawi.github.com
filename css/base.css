@@ -1,0 +1,147 @@
+.indent {
+	margin-left: 30px;	
+}
+
+dl.padded dt {
+	margin-top: 4px;	
+}
+dl.padded dd {
+	margin-bottom: 4px;
+}
+
+ol.padded li, ul.padded li {
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
+code {
+	color: #070;
+}
+
+a {
+	color: #1A81E0;	
+}
+
+div.container {
+	padding: 26px 0 16px 0;
+}
+
+h1 a.anchorlink, h2 a.anchorlink, h3 a.anchorlink, h4 a.anchorlink, h5 a.anchorlink {
+	display: none;
+}
+
+h1:hover a.anchorlink, h2:hover a.anchorlink, h3:hover a.anchorlink, h4:hover a.anchorlink, h5:hover a.anchorlink {
+	display: inline;
+}
+
+#Header {
+	
+}
+
+#Title {
+	float: left;
+}
+#Title a {
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 300;
+	font-size: 34px;
+	padding: 8px 24px;
+}
+#Navi {
+	float: right;
+}
+#Navi ul {
+	margin-left: 0;
+	margin-bottom: 0;
+	list-style: none;
+	float: right;
+}
+#Navi li {
+	float: left;
+	vertical-align: middle;
+}
+#Navi a, #Navi span {
+	display: block;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 300;
+	font-size: 24px;
+	line-height: 62px;
+	color: #CCC;
+}
+#Navi a {
+	padding: 0 12px;
+	color: #999;
+}
+#Navi .active a {
+	color: #1A81E0;
+}
+
+#Content {
+	margin-top: 26px;
+	border-top: 2px solid #CCC;
+	padding-top: 16px;
+	
+	padding-bottom: 16px;
+	border-bottom: 2px solid #CCC;
+	margin-bottom: 6px;
+}
+
+#Footer {
+	text-align: center;
+	color: #999;	
+}
+
+h2, h3, h4, h5 {
+	font-weight: normal;
+	font-family: 'Merriweather', serif;	
+}
+
+.portfolio {
+	position: relative;	
+}
+
+.portfolio .notice {
+	color: #666;
+}
+
+.portfolio section {
+	padding: 8px 16px;
+	border-left: 2px solid #CCC;
+}
+
+.portfolio section h4 {
+	margin-top: 20px;
+}
+
+.portfolio a i {
+	margin-right: 4px;
+}
+
+.portfolio code {
+	background-color: #FFF;
+	border-width: 0;
+}
+
+.portfolio .divider {
+	overflow: hidden;
+	position: relative;
+	padding-top: 16px;
+	margin-top: 16px;
+	border-top: 1px dashed #999;
+}
+
+.portfolio .divider hr {
+	position: absolute;
+	top: -100px;
+}
+
+.portfolio .screenshots {
+	max-width: 850px;
+	padding: 4px;
+	background-color: #FFF;
+	border: 1px solid #666;	
+}
+
+.portfolio .screenshots .carousel-control {
+	top: 50%;
+}
