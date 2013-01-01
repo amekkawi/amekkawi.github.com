@@ -1,6 +1,252 @@
 ---
 layout: default
-activepage: php
-title: PHP
+activepage: portfolio
+title: PHP Portfolio
+basepath: .
+js: [ 'bootstrap/js/bootstrap-carousel.js', 'bootstrap/js/bootstrap-transition.js' ]
 ---
 
+<script type="text/javascript">
+$(function(){
+	$('.carousel').carousel({ interval: false });
+});
+</script>
+
+<div class="portfolio">
+
+	<h2>Portfolio : PHP</h2>
+	
+	<p class="notice"><em>Note: All source code in the projects below were written by myself unless otherwise noted with credits.</em></p>
+	
+	<a name="SimpleMVC" id="SimpleMVC"></a>
+	<section>
+		<h3>Simple MVC <a href="#SimpleMVC" class="anchorlink">&para;</a></h3>
+		
+		<p>In late 2010 I reviewed various PHP MVC frameworks for use with future projects.
+			After reviewing several I decided to experiment with creating a simple MVC while simultaneously digging into the source of several popular frameworks.
+			I ended development of this framework in early 2011 after deciding to use <a href="http://www.yiiframework.com/" target="_blank">Yii</a>.</p>
+		
+		<p><a href="https://github.com/amekkawi/simplemvc" target="_blank"><i class="icon-search"></i>View the Source on GitHub</a>
+			/ <a href="https://github.com/amekkawi/simplemvc/archive/master.zip"><i class="icon-download"></i>Download Source as Zip</a></p>
+		
+		<h4>Code Highlights</h4>
+		
+		<dl class="indent padded">
+			
+			<dt><a href="https://github.com/amekkawi/simplemvc/blob/master/core/controllers/controller.php" target="_blank">core/controllers/controller.php</a></dt>
+			<dd>The controller for the application. Processes the request and provides helper methods to the application.
+				Can by extended by defining an <code>AppController</code> class in the application.</dd>
+			
+			<dt><a href="https://github.com/amekkawi/simplemvc/blob/master/core/models/db_super.php" target="_blank">core/models/db_super.php</a></dt>
+			<dd>The second level descendant for DB model class files defined by the application. Provides abstract methods for accessing the DB.
+				These methods may also be overridden  by a <code>DBCore</code> class
+				(e.g. <a href="https://github.com/amekkawi/simplemvc/blob/master/core/models/mysql/db_core.php" target="_blank">core/models/mysql/db_core.php</a>)
+				that would define DBMS-specific methods for performing the generic actions.</dd>
+				
+			<dt><a href="https://github.com/amekkawi/simplemvc/blob/master/core/start.php#L1" target="_blank">core/start.php</a></dt>
+			<dd>The entry script for the MVC. Includes required files, processes application config, connects to the database and dispatches the request to <code>Controller</code>.</dd>
+			
+			<dt><a href="https://github.com/amekkawi/simplemvc/blob/master/core/controllers/helpers/download.php" target="_blank">core/controllers/helpers/download.php</a></dt>
+			<dd>A helper class that wraps PHP's curl functionality and provides custom error handling.</dd>
+			
+			<dt><a href="https://github.com/amekkawi/simplemvc/blob/master/core/controllers/helpers/image.php" target="_blank">core/controllers/helpers/image.php</a></dt>
+			<dd>Two helper classes that provide static methods useful when working with images, especially when creating thumbnails within specific maximum boundaries.</dd>
+		</dl>
+		
+		<h4>See Also</h4>
+		
+		<p class="indent">The <a href="#BetterJDReports">Better JD Reports</a> project used this framework. and as part of the Simple MVC experiment.</p>
+		
+		<p class="notice"><em>Note: This project was <a href="http://simple-mvc.svn.sourceforge.net/" target="_blank">originally hosted in SourceForge</a>,
+			and has been moved to GitHub for readability.</em></p>
+	
+	</section>
+	
+	<div class="divider"><hr size="1" noshade="noshade" /></div>
+	
+	<a name="DiskUsageReports" id="DiskUsageReports"></a>
+	<section>
+		<h3>Disk Usage Reports <a href="#DiskUsageReports" class="anchorlink">&para;</a></h3>
+		
+		<p>In early 2011 I began work on a tool that would allow a server administrator to direct users to user friendly, web based, disk usage reports. This was a tool I sorely needed while managing the university-wide web hosting at Howard University. The only solution I was able to find was durep, which did not meet many of my needs.</p>
+		
+		<p class="notice"><em>Note: Since this application supports PHP4, it does not use PHP5 classes.</em></p>
+		
+		<p><a href="http://diskusagereports.com/" target="_blank"><i class="icon-home"></i>Visit the Web Site</a>
+			/ <a href="https://github.com/amekkawi/diskusagereports/tree/2.0.0-wip" target="_blank"><i class="icon-search"></i>View the Source on GitHub</a>
+			/ <a href="https://github.com/amekkawi/diskusagereports/archive/2.0.0-wip.zip"><i class="icon-download"></i>Download Source as Zip</a></p>
+		
+		<h4>Feature Highlights</h4>
+		
+		<ul class="indent padded">
+			<li>Reports are stored as static JSON files and viewed by a static HTML page that uses jQuery to retrieve and display the data.</li>
+			<li>JSON files are separated by directory so that large reports can be quickly viewed on slow connections.</li>
+			<li>UI includes a sortable directory tree. Sort by name, size or file count.</li>
+			<li>File scanning and report generation are separated so that the heavier work can be completed on another server.</li>
+			<li>Errors encountered during scanning and report generation are displayed in the report for easy troubleshooting.</li>
+			<li>Supports UTF-8.</li>
+			<li>Includes three versions of the file scanning script. An EXE for Windows systems (which allows for full UTF-8 support), a linux bash script and a PHP version.</li>
+			<li>Lists top 100 largest files within a directory.</li>
+			<li>A distribution of "last modified" dates, grouped by customizable time frames.</li>
+			<li>A file size distribution, grouped by customizable size ranges (e.g. 500 KB - 1 MB).</li>
+			<li>Totals by file type (e.g. .txt).</li>
+		</ul>
+		
+		<h4>Code Highlights</h4>
+		
+		<dl class="indent padded">
+			
+			<dt><a href="https://github.com/amekkawi/diskusagereports/blob/2.0.0-wip/scripts/process.php" target="_blank">scripts/process.php</a></dt>
+			<dd>The command line half of processing files generated by one of the 'find' scripts.
+				This file processes CLI arguments, provides help text, and outputs messages for status update events and errors.
+				The actual processing is done by <code>scripts/inc/process.class.php</code>.</dd>
+			
+			<dt><a href="https://github.com/amekkawi/diskusagereports/blob/2.0.0-wip/scripts/inc/process.class.php" target="_blank">scripts/inc/process.class.php</a></dt>
+			<dd>This class does the actual processing of the data generated by one of the 'find' scripts. </dd>
+		
+			<dt><a href="https://github.com/amekkawi/diskusagereports/blob/master/scripts/inc/find.class.php" target="_blank">scripts/inc/find.class.php</a></dt>
+			<dd>A simple example of a controller. DB Models are loaded using <code>Model::Load()</code> and data is passed to the view using <code>$this->setData()</code>.</dd>
+		</dl>
+		
+		<h4>Live Demo</h4>
+		
+		<div class="indent">
+			<p>A live demo of a report can be viewed at <a href="http://diskusagereports.com/demo/report/?demo" target="_blank">http://diskusagereports.com/demo/report/?demo</a>.</p>
+		</div>
+		
+		<p class="notice"><em>Note: This project was <a href="http://betterjdreport.svn.sourceforge.net/" target="_blank">originally hosted in SourceForge</a>,
+			and has been moved to GitHub for readability.</em></p>
+		
+	</section>
+	
+	<div class="divider"><hr size="1" noshade="noshade" /></div>
+	
+	<a name="BetterJDReports" id="BetterJDReports"></a>
+	<section>
+		<h3>Better JD Reports <a href="#BetterJDReports" class="anchorlink">&para;</a></h3>
+		
+		<p>I use JungleDisk for backing up many of my desktops and several servers. While an excellent backup service it lacked a comprehensive way
+			to monitor backups and review large backup reports. As part of the <a href="#SimpleMVC">Simple MVC</a> experiment, this project aimed to provide these features.</p>
+			
+		<p class="notice"><em>Note: This project was a WIP and will be recreated using Yii in the future.</em></p>
+		
+		<p><a href="https://github.com/amekkawi/betterjdreports" target="_blank"><i class="icon-search"></i>View the Source on GitHub</a>
+			/ <a href="https://github.com/amekkawi/betterjdreports/archive/master.zip"><i class="icon-download"></i>Download Source as Zip</a></p>
+		
+		<h4>Feature Highlights</h4>
+		
+		<ul class="indent padded">
+			<li>Report files are encrypted and compressed by clients before they are uploaded to the server running this application.</li>
+			<li>Almost all pages include comprehensive search filters to find specific clients, jobs, reports or backed-up files.</li>
+			<li>Search filters can be bookmarked for convenience.</li>
+			<li>Clients can be tagged for organization.</li>
+			<li>The report search tab doubles as the report-purging interface, providing comprehensive search filters and a preview of what will be purged.</li>
+			<li>Admin actions (i.e. adding tags or purging reports) are logged.</li>
+		</ul>
+		
+		<h4>Code Highlights</h4>
+		
+		<dl class="indent padded">
+			
+			<dt><a href="https://github.com/amekkawi/betterjdreports/blob/master/app/models/mysql/report.php" target="_blank">app/models/mysql/report.php</a></dt>
+			<dd>The Report model provides a Search method to safely and flexibly perform searches using varied criteria.
+				Internally the model uses its ProcessFilter method to break down filter string into SQL segments for a WHERE query.</dd>
+		
+			<dt><a href="https://github.com/amekkawi/betterjdreports/blob/master/app/controllers/home_controller.php" target="_blank">app/controllers/home_controller.php</a></dt>
+			<dd>A simple example of a controller. DB Models are loaded using <code>Model::Load()</code> and data is passed to the view using <code>$this->setData()</code>.</dd>
+			
+			<dt><a href="https://github.com/amekkawi/betterjdreports/blob/master/app/views/reports/search.php" target="_blank">app/views/reports/search.php</a></dt>
+			<dd>The view for report searches. This view is also used when purging records to allow the admin to verify the purge criteria are correct.</dd>
+		</dl>
+		
+		<h4>Screenshots</h4>
+		
+		<div class="indent">
+			<div id="betterjdreportsscreenshots" class="carousel slide screenshots">
+				<div class="carousel-inner">
+					<div class="active item">
+						<img src="images/php/betterjdreports-1.jpg" alt="" />
+						<div class="carousel-caption"><p>The home screen displays bookmarks and recent admin actions.</p></div>
+					</div>
+					<div class="item">
+						<img src="images/php/betterjdreports-2.jpg" alt="" />
+						<div class="carousel-caption"><p>The Latest Reports tab lists the date of the latest report for each backup job.
+							It also lists the number of days since that backup, to quickly check on outstanding backups.</p></div>
+					</div>
+					<div class="item">
+						<img src="images/php/betterjdreports-3.jpg" alt="" />
+						<div class="carousel-caption"><p>Clients can be tagged to help organize many clients.</p></div>
+					</div>
+					<div class="item">
+						<img src="images/php/betterjdreports-4.jpg" alt="" />
+						<div class="carousel-caption"><p>Reports can be thoroughly filtered, and those search criteria can be bookmarked for future use.</p></div>
+					</div>
+					<div class="item">
+						<img src="images/php/betterjdreports-5.jpg" alt="" />
+						<div class="carousel-caption"><p>Files can be searched for across all reports for a client. Minimum search criteria are enforced to avoid querying too many records.</p></div>
+					</div>
+					<div class="item">
+						<img src="images/php/betterjdreports-6.jpg" alt="" />
+						<!--<div class="carousel-caption"><p>A report's detail can also be filtered by many criteria to find specific entries.</p></div>-->
+					</div>
+				</div>
+				<a class="carousel-control left" href="#betterjdreportsscreenshots" data-slide="prev">&lsaquo;</a>
+				<a class="carousel-control right" href="#betterjdreportsscreenshots" data-slide="next">&rsaquo;</a>
+			</div>
+		</div>
+		
+		<p class="notice"><em>Note: This project was <a href="http://betterjdreport.svn.sourceforge.net/" target="_blank">originally hosted in SourceForge</a>,
+			and has been moved to GitHub for readability.</em></p>
+		
+	</section>
+	
+	<div class="divider"><hr size="1" noshade="noshade" /></div>
+	
+	<a name="VTCalendar" id="VTCalendar"></a>
+	<section>
+		<h3>VTCalendar <a href="#VTCalendar" class="anchorlink">&para;</a></h3>
+		
+		<p>Originally made by Virginia Tech, this online calendar system was implemented at Howard University around 2007. At the time most calendar systems on the market seemed to be designed for commercial settings. These typically do not fit well with how a university organizes itself and manages its events. Since a university designed VTCalendar, it did not have these issues. After its implementation at Howard University I began work on improving the calendar, adding new features and fixes many bugs. In late 2008 I took over the project to share my changes with other universities.</p>
+		
+		<p><a href="https://github.com/amekkawi/vtcalendar/tree/2.3.1" target="_blank"><i class="icon-search"></i>View the Source on GitHub</a>
+			/ <a href="https://github.com/amekkawi/vtcalendar/archive/2.3.1.zip"><i class="icon-download"></i>Download Source as Zip</a></p>
+		
+		<h4>Improvement Highlights</h4>
+		
+		<ul class="indent padded">
+			<li>Major code refactoring.</li>
+			<li>Hundreds of bug fixes and security fixes.</li>
+			<li>Added "Upcoming" tab that shows all un-expired events in the next 365 days.</li>
+			<li>Moved most styling from HTML (font tags, nested tables, etc) to CSS.</li>
+			<li>Greatly improved ability to customize the calendar's look and feel.</li>
+			<li>In additional to LDAP, an internal mechanism was added to authenticate users via HTTP authentication against a web address, to allow a custom script to provide authentication.</li>
+			<li>Upcoming events can be displayed on other Web sites by inserting one line of JavaScript into the site. See <a href="http://www.howard.edu/calendar/public-export/instructions.php" target="_blank">www.howard.edu/calendar/public-export/instructions.php</a> for an example.</li>
+			<li>Added a wizard that upgrades the database as necessary between versions.</li>
+			<li>Better support for PostgreSQL.</li>
+			<li>Added general polish, such as...
+				<ul>
+					<li>Performance and bandwidth improvements.</li>
+					<li>Friendly messages for internal errors.</li>
+					<li>Improved admin screens.</li>
+					<li>Converted most DB columns to more appropriate types (i.e. 'text' to varchar).</li>
+					<li>New color scheme.</li>
+				</ul>
+			</li>
+		</ul>
+		
+		<h4>Code Highlights</h4>
+		
+		<p>Most of VTCalendar's code is a mix of the previous authors and changes I have made. However, there are a few files that I created entirely:</p>
+		
+		<dl class="indent padded">
+			
+			<dt><a href="https://github.com/amekkawi/vtcalendar/blob/2.3.1/install/upgradedb.php" target="_blank">install/upgradedb.php</a> and <a href="https://github.com/amekkawi/vtcalendar/blob/2.3.1/install/upgradedb-functions.php" target="_blank">install/upgradedb-functions.php</a></dt>
+			<dd>The database segment of the installation script. These scripts either create the database if it does not exist, or they modify the tables to match the schema defined in <a href="https://github.com/amekkawi/vtcalendar/blob/2.3.1/install/upgradedb-data.php" target="_blank">install/upgradedb-data.php</a>. Warnings are given before making changes that would destroy existing data (such as reducing the length of a varchar column).</dd> 
+		</dl>
+		
+		<p class="notice"><em>Note: This project was <a href="http://sourceforge.net/projects/vtcalendar/" target="_blank">originally hosted in SourceForge</a>,
+			and has been moved to GitHub for readability.</em></p>
+		
+	</section>
+
+</div>
