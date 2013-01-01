@@ -79,17 +79,27 @@ $(function(){
 		<h4>Feature Highlights</h4>
 		
 		<ul class="indent padded">
-			<li>Reports are stored as static JSON files and viewed by a static HTML page that uses jQuery to retrieve and display the data.</li>
-			<li>JSON files are separated by directory so that large reports can be quickly viewed on slow connections.</li>
-			<li>UI includes a sortable directory tree. Sort by name, size or file count.</li>
 			<li>File scanning and report generation are separated so that the heavier work can be completed on another server.</li>
+			<li>Includes three versions of the file scanning script. An EXE for Windows systems (which allows for full UTF-8 support), a linux bash script and a PHP version.</li>
+			<li>Reports are saved as static JSON files and viewed by a static HTML page that uses jQuery to retrieve and display the data.</li>
+			<li>JSON files are separated by directory so that large reports can be quickly viewed on slow connections.</li>
 			<li>Errors encountered during scanning and report generation are displayed in the report for easy troubleshooting.</li>
 			<li>Supports UTF-8.</li>
-			<li>Includes three versions of the file scanning script. An EXE for Windows systems (which allows for full UTF-8 support), a linux bash script and a PHP version.</li>
-			<li>Lists top 100 largest files within a directory.</li>
-			<li>A distribution of "last modified" dates, grouped by customizable time frames.</li>
-			<li>A file size distribution, grouped by customizable size ranges (e.g. 500 KB - 1 MB).</li>
-			<li>Totals by file type (e.g. .txt).</li>
+			
+			<li>File names are based on a hash of the relative path to the root directory of the report.
+				This will allow for future versions of Disk Usage Reports to compare reports generated at different times.</li>
+				
+			<li>Saves a file containing a list of basic directory data for the entire report, allowing the UI to display a sortable directory tree.
+				This file is disabled once it passes a user-customizable byte threshold.</li>
+				
+			<li>Calculates the following for each directory, up to a user-customizable depth of sub-directories.
+				<ul>
+					<li>Top 100 largest files.</li>
+					<li>Distribution of "last modified" dates, grouped by customizable time frames (e.g. 1-2 years).</li>
+					<li>File size distribution, grouped by customizable size ranges (e.g. 500 KB - 1 MB).</li>
+					<li>Totals by file type (e.g. .txt).</li>
+				</ul>
+			</li>
 		</ul>
 		
 		<h4>Code Highlights</h4>
@@ -112,6 +122,12 @@ $(function(){
 		
 		<div class="indent">
 			<p>A live demo of a report can be viewed at <a href="http://diskusagereports.com/demo/report/?demo" target="_blank">http://diskusagereports.com/demo/report/?demo</a>.</p>
+		</div>
+		
+		<h4>See Also</h4>
+		
+		<div class="indent">
+			<p>A <a href="http://diskusagereports.com/docs/roadmap.html" target="_blank">roadmap of upcoming features</a> is also available.</p>
 		</div>
 		
 		<p class="notice"><em>Note: This project was <a href="http://betterjdreport.svn.sourceforge.net/" target="_blank">originally hosted in SourceForge</a>,
