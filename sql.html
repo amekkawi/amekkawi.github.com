@@ -46,7 +46,7 @@ section .syntaxhighlighter {
 		that thread are reset so another thread can process them.</p>
 		
 		<p>The <code>INSERT...SELECT</code> statement below inserts a new record in the queue.
-		It's <code>position</code> column must be +1 of the largest current position,
+		It's position value must be +1 of the largest current position,
 		which is achieved with a <code>SELECT</code>. The <code>COALESCE()</code>
 		function handles the case where there is no current records for the groupid.</p>
 		
@@ -84,12 +84,14 @@ LIMIT 1
         <h3 id="BetterJDReports">Better JD Reports <a href="#BetterJDReports" class="anchorlink">&para;</a></h3>
         
         <p>The statements below are generated dynamically by the <a href="php.html#BetterJDReports">Better JD Reports</a>
-        PHP application, and are shown here for example purposes.</p>
+        PHP application, and are shown here in their final form for example purposes.</p>
         
         <p>The <code>SELECT</code> statement below is from the &quot;File Search&quot; tab
         (see: <a href="images/php/betterjdreports-5.jpg">screenshot</a>). The application requires users to first
         enter the client ID and either the beginning of the file's path or the file's size (greater/less/equal/notequal).
-        This assures that the executed query properly uses indexes to avoid long execution time.</p>
+        This assures that the executed query properly uses indexes to avoid long execution time. Note: File paths in
+        the <code>items</code> table are split between three columns (path1/path2/path3) to allow for indexing beyond the first
+        255 characters.</p>
 
 <pre class="brush:sql">
 SELECT i.* FROM items i
@@ -105,7 +107,8 @@ ORDER BY logorder asc, path1 asc, path2 asc, path3 asc
         (see: <a href="images/php/betterjdreports-2.jpg">screenshot</a>). It starts by 
         using a subquery to retrieve the latest report records grouped by clientid and job.
         That query is wrapped by a <code>SELECT</code> that retrieves the record for those reports.
-        This must be done as a subquery in order to retrieve the correct report's data.</p>
+        This statement must be done using a subquery, as it is not possible to use <code>MAX()</code>
+        in the <code>WHERE</code> clause.</p>
     
 <pre class="brush:sql">
 SELECT r.* 
@@ -122,8 +125,8 @@ ORDER BY reporttime DESC, clientid ASC, job ASC
 
     <p>The next three <code>SELECT</code> statements are from the &quot;Clients&quot; tab
         (see: <a href="images/php/betterjdreports-3.jpg">screenshot</a>). To minimize the number
-        of queries it is broken down into four steps. Using this method allows any number of
-        client records to be displayed with only three queries.</p>
+        of queries, the data retrieval is broken down into four steps. Using this method
+        allows for any number of client records to be displayed with only three queries.</p>
         
     <p>Step 1: Retrieve the list of client IDs, as well as the total number of reports for that client.</p>
 
