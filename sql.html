@@ -1,0 +1,171 @@
+---
+layout: default
+activepage: portfolio
+title: SQL Portfolio
+basepath: .
+---
+
+<script type="text/javascript" src="js/syntax/shCore.js"></script>
+<link href="js/syntax/shCore.css" rel="stylesheet" type="text/css">
+<link href="js/syntax/shThemeDefault.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="js/syntax/shBrushSql.js"></script>
+
+<style type="text/css">
+.syntaxhighlighter div.toolbar {
+    display: none !important;
+}
+#SHCredit {
+    text-align: center;
+    position: relative;
+    top: 20px;
+}
+#SHCredit, #SHCredit a {
+    color: #999;
+}
+
+section .syntaxhighlighter {
+    padding: 10px 0;
+    border: 1px solid #CCC;
+}
+
+</style>
+
+<div class="portfolio">
+
+	<h2>Portfolio : SQL</h2>
+	
+	<p class="notice"><em>Note: The examples below are generally created by an application and use positional or named parameters.</em></p>
+
+
+    <section>
+		<h3 id="MySQLQueue">MySQL Queue for Background Worker Threads <a href="#MySQLQueue" class="anchorlink">&para;</a></h3>
+		
+		<p>The SQL statements below create a queue (FIFO) of tasks, stored in the database.
+		These tasks are executed by a series of threads, which are launched and monitored
+		by a parent process. If a thread dies unexpectedly, the records being processed by
+		that thread are reset so another thread can process them.</p>
+		
+		<p>The <code>INSERT...SELECT</code> statement below inserts a new record in the queue.
+		It's <code>position</code> column must be +1 of the largest current position,
+		which is achieved with a <code>SELECT</code>. The <code>COALESCE()</code>
+		function handles the case where there is no current records for the groupid.</p>
+		
+<pre class="brush:sql">
+INSERT INTO queue (groupid, position, status, type, data, created, modified)
+SELECT '9aa6df9c-c496-11e0-a99c-0b6bfba855b4',
+       COALESCE(MAX(q.position), -1) + 1 as position,
+       'waiting', 'page', 'somedata', NOW(), NOW()
+FROM queue q WHERE q.groupid = '9aa6df9c-c496-11e0-a99c-0b6bfba855b4'
+ORDER BY position DESC
+LIMIT 1
+ON DUPLICATE KEY UPDATE groupid = groupid
+</pre>
+
+        <p>The <code>UPDATE</code> statement below sets the background thread's ID
+        to the first record in the queue, determined by the <code>position</code> column.
+        The thread then retrieves all records matching it's thread ID and processes them.</p>
+
+<pre class="brush:sql">
+UPDATE queue
+SET status = 'running', threadnum = 1
+WHERE groupid = '9aa6df9c-c496-11e0-a99c-0b6bfba855b4' AND status = 'waiting'
+ORDER BY position
+LIMIT 1
+</pre>
+		
+		<p>Note: The queries above can occasionally encounter deadlocks.
+		To handle this, the PHP script retries the query after waiting a random
+		number of milliseconds. Since a limited number of background threads are
+		executing the queries, the number of deadlocks are minimal.</p>
+
+    </section>
+    <div class="divider"><hr size="1" noshade="noshade"></div>
+    <section>
+        <h3 id="BetterJDReports">Better JD Reports <a href="#BetterJDReports" class="anchorlink">&para;</a></h3>
+        
+        <p>The statements below are generated dynamically by the <a href="php.html#BetterJDReports">Better JD Reports</a>
+        PHP application, and are shown here for example purposes.</p>
+        
+        <p>The <code>SELECT</code> statement below is from the &quot;File Search&quot; tab
+        (see: <a href="images/php/betterjdreports-5.jpg">screenshot</a>). The application requires users to first
+        enter the client ID and either the beginning of the file's path or the file's size (greater/less/equal/notequal).
+        This assures that the executed query properly uses indexes to avoid long execution time.</p>
+
+<pre class="brush:sql">
+SELECT i.* FROM items i
+WHERE concat(i.path1, i.path2, i.path3) LIKE '%default%'
+    AND i.size2 &gt; 1024
+    AND i.clientid = 'web1'
+    AND i.path1 LIKE '/var/www/mainsite%'
+    AND i.clientid = 'web1'
+ORDER BY logorder asc, path1 asc, path2 asc, path3 asc
+</pre>
+
+    <p>The <code>SELECT</code> statement below is from the &quot;Latest Reports&quot; tab
+        (see: <a href="images/php/betterjdreports-2.jpg">screenshot</a>). It starts by 
+        using a subquery to retrieve the latest report records grouped by clientid and job.
+        That query is wrapped by a <code>SELECT</code> that retrieves the record for those reports.
+        This must be done as a subquery in order to retrieve the correct report's data.</p>
+    
+<pre class="brush:sql">
+SELECT r.* 
+FROM (
+        SELECT r.clientid, r.job, MAX(r.reporttime) AS reporttime
+        FROM reports r
+            JOIN clients c ON r.clientid = c.clientid
+            JOIN client_access ca ON ca.clientid = c.clientid AND ca.userid = 'amekkawi'
+        WHERE r.job != '*' GROUP BY r.clientid, r.job
+    ) AS ri
+    JOIN reports r ON ri.clientid = r.clientid AND ri.job = r.job AND ri.reporttime = r.reporttime
+ORDER BY reporttime DESC, clientid ASC, job ASC
+</pre>
+
+    <p>The next three <code>SELECT</code> statements are from the &quot;Clients&quot; tab
+        (see: <a href="images/php/betterjdreports-3.jpg">screenshot</a>). To minimize the number
+        of queries it is broken down into four steps. Using this method allows any number of
+        client records to be displayed with only three queries.</p>
+        
+    <p>Step 1: Retrieve the list of client IDs, as well as the total number of reports for that client.</p>
+
+<pre class="brush:sql">
+SELECT count(r.clientid) AS totalreports, c.*
+FROM (clients c)
+    LEFT JOIN reports r ON c.clientid = r.clientid
+    JOIN client_access ca on ca.clientid = c.clientid AND ca.userid = 'amekkawi'
+GROUP BY c.clientid
+ORDER BY clientid ASC, clientid ASC
+</pre>
+
+    <p>Step 2: The list of client IDs are used to generate a second query to retrieve the tags assigned to the clientid.</p>
+
+<pre class="brush:sql">
+SELECT * FROM tags
+WHERE
+    clientid = 'andre-macbookpro' OR clientid = 'andre-macmini'
+    OR clientid = 'test' OR clientid = 'web1'
+ORDER BY clientid
+</pre>
+
+    <p>Step 3: The list of client IDs are used again to generate a third query to retrieve the number of reports grouped by job.</p>
+
+<pre class="brush:sql">
+SELECT count(*) AS jobcount, clientid, job FROM reports
+WHERE
+    clientid = 'andre-macbookpro' OR clientid = 'andre-macmini'
+    OR clientid = 'test' OR clientid = 'web1'
+GROUP BY clientid, job
+ORDER BY clientid, job
+</pre>
+
+    <p>Step 4: The records from step 2 and 3 are added to their respective clientid records from step 1.</p>
+
+</section>
+
+<!-- Finally, to actually run the highlighter, you need to include this JS on your page -->
+<script type="text/javascript">
+     SyntaxHighlighter.all()
+</script>
+
+<p id="SHCredit">Syntax highlighting by <a href="http://alexgorbatchev.com/SyntaxHighlighter/">alexgorbatchev.com/SyntaxHighlighter</a></p>
+
+</div>
